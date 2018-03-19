@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StackExchange.Redis;
 using Store.Models;
 using System;
@@ -17,9 +18,11 @@ namespace Store.Controllers
             repository = repoService;
             cart = cartService;
         }
+        [Authorize]
         public ViewResult List() =>
 View(repository.Orders.Where(o => !o.Shipped));
         [HttpPost]
+        [Authorize]
         public IActionResult MarkShipped(int orderID)
         {
             Models.Order order = repository.Orders
