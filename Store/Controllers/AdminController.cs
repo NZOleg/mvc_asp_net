@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Store.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admins")]
     public class AdminController : Controller
     {
         private IProductRepository repository;

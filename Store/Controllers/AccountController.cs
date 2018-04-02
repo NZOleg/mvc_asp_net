@@ -13,49 +13,75 @@ namespace Store.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private UserManager<IdentityUser> userManager;
-        private SignInManager<IdentityUser> signInManager;
-        public AccountController(UserManager<IdentityUser> userMgr,
-        SignInManager<IdentityUser> signInMgr)
+        private UserManager<AppUser> userManager;
+        private SignInManager<AppUser> signInManager;
+        public AccountController(UserManager<AppUser> userMgr,
+        SignInManager<AppUser> signinMgr)
         {
             userManager = userMgr;
-            signInManager = signInMgr;
-            IdentitySeedData.EnsurePopulated(userMgr).Wait();
+            signInManager = signinMgr;
+            //IdentitySeedData.EnsurePopulated(userMgr).Wait();
         }
         [AllowAnonymous]
-        public ViewResult Login(string returnUrl)
+        public IActionResult Login(string returnUrl)
         {
-            return View(new LoginModel
-            {
-                ReturnUrl = returnUrl
-            });
+            ViewBag.returnUrl = returnUrl; return View();
         }
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginModel loginModel)
+        public async Task<IActionResult> Login(LoginUserModel details,
+        string returnUrl)
         {
+            Console.WriteLine(details.Email);
+            Console.WriteLine(details.Password);
+
             if (ModelState.IsValid)
             {
-                IdentityUser user =
-                await userManager.FindByNameAsync(loginModel.Name);
+                AppUser user = await userManager.FindByEmailAsync(details.Email);
                 if (user != null)
                 {
+                    
                     await signInManager.SignOutAsync();
-                    if ((await signInManager.PasswordSignInAsync(user,
-                    loginModel.Password, false, false)).Succeeded)
+                    Microsoft.AspNetCore.Identity.SignInResult result =
+                    await signInManager.PasswordSignInAsync(
+                    user, details.Password, false, false);
+                    if (result.Succeeded)
                     {
-                        return Redirect(loginModel?.ReturnUrl ?? "/Admin/Index");
+                        return Redirect(returnUrl ?? "/");
                     }
                 }
+                ModelState.AddModelError(nameof(LoginUserModel.Email),
+                "Invalid user or password");
             }
-            ModelState.AddModelError("", "Invalid name or password");
-            return View(loginModel);
+            return View(details);
         }
-        public async Task<RedirectResult> Logout(string returnUrl = "/")
+        [Authorize]
+        public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
-            return Redirect(returnUrl);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public IActionResult Index() => View(GetData(nameof(Index)));
+        [Authorize(Roles = "Users")]
+        public IActionResult OtherAction() => View("Index",
+        GetData(nameof(OtherAction)));
+        private Dictionary<string, object> GetData(string actionName) =>
+new Dictionary<string, object>
+{
+    ["Action"] = actionName,
+    ["User"] = HttpContext.User.Identity.Name,
+    ["Authenticated"] = HttpContext.User.Identity.IsAuthenticated,
+    ["Auth Type"] = HttpContext.User.Identity.AuthenticationType,
+    ["In Users Role"] = HttpContext.User.IsInRole("Users")
+};
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
+
 }

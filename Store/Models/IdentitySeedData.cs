@@ -12,14 +12,18 @@ namespace Store.Models
     {
         private const string adminUser = "Admin";
         private const string adminPassword = "Secret123$";
-        public static async Task EnsurePopulated(UserManager<IdentityUser>
+        public static async Task EnsurePopulated(UserManager<AppUser>
         userManager)
         {
             IdentityUser user = await userManager.FindByIdAsync(adminUser);
             if (user == null)
             {
-                user = new IdentityUser("Admin");
-                await userManager.CreateAsync(user, adminPassword);
+                user = new AppUser {
+                    UserName = adminUser,
+                    Email = adminUser //the only exception
+                };
+
+                await userManager.CreateAsync((AppUser)user, adminPassword);
             }
         }
     }

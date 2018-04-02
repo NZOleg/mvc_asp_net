@@ -14,9 +14,9 @@ C:\Users\Olegok\Desktop\source\repos\Store\Store\bin\Debug\netcoreapp2.0\Store.r
 C:\Users\Olegok\Desktop\source\repos\Store\Store\bin\Debug\netcoreapp2.0\Store.runtimeconfig.dev.json
 C:\Users\Olegok\Desktop\source\repos\Store\Store\bin\Debug\netcoreapp2.0\Store.dll
 C:\Users\Olegok\Desktop\source\repos\Store\Store\bin\Debug\netcoreapp2.0\Store.pdb
-C:\Users\Olegok\Desktop\source\repos\Store\Store\obj\Debug\netcoreapp2.0\Store.csprojResolveAssemblyReference.cache
 C:\Users\Olegok\Desktop\source\repos\Store\Store\obj\Debug\netcoreapp2.0\Store.csproj.CoreCompileInputs.cache
 C:\Users\Olegok\Desktop\source\repos\Store\Store\obj\Debug\netcoreapp2.0\Store.AssemblyInfoInputs.cache
 C:\Users\Olegok\Desktop\source\repos\Store\Store\obj\Debug\netcoreapp2.0\Store.AssemblyInfo.cs
 C:\Users\Olegok\Desktop\source\repos\Store\Store\obj\Debug\netcoreapp2.0\Store.dll
 C:\Users\Olegok\Desktop\source\repos\Store\Store\obj\Debug\netcoreapp2.0\Store.pdb
+C:\Users\Olegok\Desktop\source\repos\Store\Store\obj\Debug\netcoreapp2.0\Store.csprojResolveAssemblyReference.cache

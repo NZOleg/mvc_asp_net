@@ -62,6 +62,7 @@ namespace Store
             app.UseStaticFiles();
             app.UseSession();
             app.UseAuthentication();
+
             app.UseMvc(routes => {
                 routes.MapRoute(name: "Error", template: "Error",
                     defaults: new { controller = "Error", action = "Error" });
@@ -94,6 +95,7 @@ namespace Store
 
             //SeedData.EnsurePopulated(app);
             //IdentitySeedData.EnsurePopulated(app);
+            AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
         }
     }
 }
