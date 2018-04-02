@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Store.Models;
 using Store.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace Store.Controllers
         {
             userManager = userMgr;
             signInManager = signInMgr;
+            IdentitySeedData.EnsurePopulated(userMgr).Wait();
         }
         [AllowAnonymous]
         public ViewResult Login(string returnUrl)

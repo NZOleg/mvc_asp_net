@@ -17,6 +17,10 @@ namespace Store.Models
         [Range(0.01, double.MaxValue,
         ErrorMessage = "Please enter a positive price")]
         public decimal Price { get; set; }
+
+        [Required(ErrorMessage = "Please Download a picture for the image")]
+        public string Image { get; set; }
+
         [Required(ErrorMessage = "Please specify a category")]
         public string Category { get; set; }
     }
