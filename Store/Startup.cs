@@ -95,7 +95,7 @@ namespace Store
 
             //SeedData.EnsurePopulated(app);
             //IdentitySeedData.EnsurePopulated(app);
-            AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
+            //AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
         }
     }
 }

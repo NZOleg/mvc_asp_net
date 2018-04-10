@@ -1,0 +1,20 @@
+﻿@model Product
+<div class="card h-100">
+        <img class="card-img-top" src="~/images/@Model.Image" alt="Alternate Text" />
+        <div class="card-body">
+            <h4 class="card-title">
+                @Model.Name
+            </h4>
+            <h5>@Model.Price.ToString("c")</h5>
+        </div>
+        <form id="@Model.ProductID" asp-action="Paypal"
+              asp-controller="Cart" method="post">
+            <input type="hidden" asp-for="ProductID" />
+            <input type="hidden" name="returnUrl"
+                   value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+            <button type="submit"
+                    class="btn btn-success btn-sm pull-right" style="align-content:center; width:100%; ">
+                Buy Now
+            </button>
+        </form>
+</div>

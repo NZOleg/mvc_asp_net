@@ -18,30 +18,36 @@ namespace Store
             BuildWebHost(args).Run();
         }
 
+        //public static IWebHost BuildWebHost(string[] args) =>
+        //    WebHost.CreateDefaultBuilder(args)
+        //    .UseContentRoot(Directory.GetCurrentDirectory())
+        //    .ConfigureAppConfiguration((hostingContext, config) => {
+        //        var env = hostingContext.HostingEnvironment;
+        //        config.AddJsonFile("appsettings.json",
+        //        optional: true, reloadOnChange: true)
+        //        .AddJsonFile($"appsettings.{env.EnvironmentName}.json",
+        //        optional: true, reloadOnChange: true);
+        //        config.AddEnvironmentVariables();
+        //        if (args != null)
+        //        {
+        //            config.AddCommandLine(args);
+        //        }
+        //    })
+        //    .UseIISIntegration()
+        //    .UseDefaultServiceProvider((context, options) => {
+        //        options.ValidateScopes =
+        //        context.HostingEnvironment.IsDevelopment();
+        //    })
+        //        .UseStartup<Startup>()
+        //        .UseDefaultServiceProvider(options =>
+        //            options.ValidateScopes = false)
+        //        .Build();
+
         public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-            .UseKestrel()
-            .UseContentRoot(Directory.GetCurrentDirectory())
-            .ConfigureAppConfiguration((hostingContext, config) => {
-                var env = hostingContext.HostingEnvironment;
-                config.AddJsonFile("appsettings.json",
-                optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json",
-                optional: true, reloadOnChange: true);
-                config.AddEnvironmentVariables();
-                if (args != null)
-                {
-                    config.AddCommandLine(args);
-                }
-            })
-            .UseIISIntegration()
-            .UseDefaultServiceProvider((context, options) => {
-                options.ValidateScopes =
-                context.HostingEnvironment.IsDevelopment();
-            })
-                .UseStartup<Startup>()
-                .UseDefaultServiceProvider(options =>
-                    options.ValidateScopes = false)
-                .Build();
+    WebHost.CreateDefaultBuilder(args)
+        .UseStartup<Startup>()
+        .UseDefaultServiceProvider(options =>
+            options.ValidateScopes = false)
+        .Build();
     }
 }

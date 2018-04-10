@@ -3,7 +3,7 @@
 <p>Please enter your details, and we'll ship your goods right away!</p>
 
 <div asp-validation-summary="All" class="text-danger"></div>
-<form asp-action="Checkout" method="post">
+<form asp-action="Checkout" method="post" id="checkout">
     <h3>Ship to</h3>
     <div class="form-group">
         <label>Name:</label><input asp-for="Name" class="form-control" />
@@ -37,6 +37,43 @@
         </label>
     </div>
     <div class="text-center">
-        <input class="btn btn-primary" type="submit" value="Complete Order" />
+        <input class="btn btn-primary" id="submit" type="submit" value="Complete Order" style="visibility: hidden;" />
+        <div id="paypal-button"></div>
+
+        <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+        <script>
+            paypal.Button.render({
+
+                env: 'sandbox',
+
+                client: {
+                    sandbox: 'Ac2cQNtiGZWB8n4dfmKKah82LEC4_lAPU5H4OY6vz6_rHnUfQwB7hTBlVPMESxyB9SAqVvgcpoNte4Uf',
+                },
+
+                commit: true, // Show a 'Pay Now' button
+
+                payment: function (data, actions) {
+                    return actions.payment.create({
+                        payment: {
+                            transactions: [
+                                {
+                                    amount: { total: '1.00', currency: 'USD' }
+                                }
+                            ]
+                        }
+                    });
+                },
+
+                onAuthorize: function (data, actions) {
+                    return actions.payment.execute().then(function (payment) {
+                        document.getElementById("checkout").submit.click();
+                        // The payment is complete!
+                        // You can now show a confirmation message to the customer
+                    });
+                }
+
+            }, '#paypal-button');
+        </script>
     </div>
 </form>

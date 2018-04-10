@@ -18,6 +18,31 @@ namespace Store.Models
             if (!context.Products.Any())
             {
                 context.Products.AddRange(
+
+                new Product
+                {
+                    Name = "Gold",
+                    Description = "A boat for one person",
+                    Category = "membership",
+                    Price = 275,
+                    Image = "gold.png"
+                },
+                new Product
+                {
+                    Name = "Silver",
+                    Description = "A boat for one person",
+                    Category = "membership",
+                    Price = 275,
+                    Image = "silver.png"
+                },
+                new Product
+                {
+                    Name = "Bronze",
+                    Description = "A boat for one person",
+                    Category = "membership",
+                    Price = 275,
+                    Image = "bronze.png"
+                },
                     new Product
                     {
                         Name = "Kayak",

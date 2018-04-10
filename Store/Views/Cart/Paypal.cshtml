@@ -1,0 +1,50 @@
+﻿@model CartIndexViewModel
+
+<form asp-action="MembershipCheckout" asp-controller="Order" method="post" id="checkout">
+   
+    <div class="text-center">
+        <input type="hidden" name="membership"
+               value="@ViewBag.membership" />
+        <input class="btn btn-primary" id="submit" type="submit" value="Complete Order" style="visibility: hidden;" />
+        <div id="paypal-button"></div>
+
+        <script>
+            document.getElementById("paypal-button").click();
+        </script>
+        <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+        <script>
+            paypal.Button.render({
+
+                env: 'sandbox',
+
+                client: {
+                    sandbox: 'Ac2cQNtiGZWB8n4dfmKKah82LEC4_lAPU5H4OY6vz6_rHnUfQwB7hTBlVPMESxyB9SAqVvgcpoNte4Uf',
+                },
+
+                commit: true, // Show a 'Pay Now' button
+
+                payment: function (data, actions) {
+                    return actions.payment.create({
+                        payment: {
+                            transactions: [
+                                {
+                                    amount: { total: '1.00', currency: 'USD' }
+                                }
+                            ]
+                        }
+                    });
+                },
+
+                onAuthorize: function (data, actions) {
+                    return actions.payment.execute().then(function (payment) {
+                        document.getElementById("checkout").submit.click();
+                        // The payment is complete!
+                        // You can now show a confirmation message to the customer
+                    });
+                }
+
+            }, '#paypal-button');
+        </script>
+    </div>
+</form>

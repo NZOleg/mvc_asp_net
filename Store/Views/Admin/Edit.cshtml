@@ -3,6 +3,8 @@
     ViewBag.Title = "Edit Product";
     Layout = "_AdminLayout";
 }
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+<script>tinymce.init({ selector:'textarea' });</script>
 <form asp-action="Edit" method="post">
     <input type="hidden" asp-for="ProductID" />
     <div class="form-group">
@@ -10,6 +12,12 @@
         <div><span asp-validation-for="Name" class="text-danger"></span></div>
         <input asp-for="Name" class="form-control" />
     </div>
+    <div class="form-group">
+        <label asp-for="Image"></label>
+        <div><span asp-validation-for="Image" class="text-danger"></span></div>
+        <input type="file" name="image" asp-for="Image" />
+    </div>
+    
     <div class="form-group">
         <label asp-for="Description"></label>
         <div><span asp-validation-for="Description" class="text-danger"></span></div>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Store.Infrastructure;
 using Store.Models;
 using Store.Models.ViewModels;
@@ -13,17 +14,46 @@ namespace Store.Controllers
     {
         private IProductRepository repository;
         public int PageSize = 6;
+        private UserManager<AppUser> userManager;
+        private SignInManager<AppUser> signInManager;
 
-        public ProductController(IProductRepository repo)
+        public ProductController(IProductRepository repo, UserManager<AppUser> userMgr,
+        SignInManager<AppUser> signinMgr)
         {
+            userManager = userMgr;
+            signInManager = signinMgr;
             repository = repo;
         }
 
-        public ViewResult List(string category, int productPage = 1)
-            => View(new ProductsListViewModel
+        public IEnumerable<Product> GetMembershipProducts()
+        {
+            return repository.Products
+                    .Where(p => p.Category == "membership");
+            
+        }
+        private Task<AppUser> CurrentUser() { 
+            if(HttpContext.User.Identity.Name != null) {
+
+                return userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public ViewResult List(string category, int productPage = 1) {
+            if(CurrentUser() != null) { 
+            if (!String.IsNullOrEmpty(CurrentUser().Result.Message))
+                {
+                    ViewBag.Message = CurrentUser().Result.Message;
+                    ViewBag.Message = "";
+                }
+            }
+
+            return View(new ProductsListViewModel
             {
                 Products = repository.Products
-                    .Where(p => category == null || p.Category == category)
+                    .Where(p => category == null || p.Category == category || p.Category == "membership")
                     .OrderBy(p => p.ProductID)
                     .Skip((productPage - 1) * PageSize)
                     .Take(PageSize),
@@ -38,5 +68,7 @@ e.Category == category).Count()
                 },
                 CurrentCategory = category
             });
+        }
+
     }
 }

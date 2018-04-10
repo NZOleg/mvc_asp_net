@@ -19,4 +19,3 @@ C:\Users\Olegok\Desktop\source\repos\Store\Store\obj\Debug\netcoreapp2.0\Store.A
 C:\Users\Olegok\Desktop\source\repos\Store\Store\obj\Debug\netcoreapp2.0\Store.AssemblyInfo.cs
 C:\Users\Olegok\Desktop\source\repos\Store\Store\obj\Debug\netcoreapp2.0\Store.dll
 C:\Users\Olegok\Desktop\source\repos\Store\Store\obj\Debug\netcoreapp2.0\Store.pdb
-C:\Users\Olegok\Desktop\source\repos\Store\Store\obj\Debug\netcoreapp2.0\Store.csprojResolveAssemblyReference.cache

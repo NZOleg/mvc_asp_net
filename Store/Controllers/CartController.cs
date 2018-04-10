@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Store.Infrastructure;
@@ -45,5 +46,15 @@ namespace Store.Controllers
             }
             return RedirectToAction("Index", new { returnUrl });
         }
+        [Authorize]
+        public ViewResult Paypal(int productId, string returnUrl)
+        {
+            Product product = repository.Products
+            .FirstOrDefault(p => p.ProductID == productId);
+            string membership = product.Name;
+            ViewBag.membership = membership;
+            return View();
+        }
+
     }
 }

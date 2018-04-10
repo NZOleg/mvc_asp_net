@@ -55,6 +55,22 @@ namespace Store.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> Expire(string id)
+        {
+            AppUser user = await userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+
+                user.ExprireDate = ((DateTime)user.ExprireDate).AddYears(-1);
+                return RedirectToAction("Logout", "Account");
+            }
+            else
+            {
+                return RedirectToAction("Index", "User");
+            }
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
             AppUser user = await userManager.FindByIdAsync(id);

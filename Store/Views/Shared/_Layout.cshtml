@@ -1,29 +1,72 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <meta name="viewport" content="width=device-width" />
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Drink Shop</title>
+
+    <!-- Bootstrap core CSS -->
     <link rel="stylesheet"
           asp-href-include="/lib/bootstrap/dist/**/*.min.css"
           asp-href-exclude="**/*-reboot*,**/*-grid*" />
     <link rel="stylesheet" asp-href-include="/lib/fontawesome/css/*.css" />
-    <title>SportsStore</title>
+
+
 </head>
+
 <body>
-    <div class="navbar navbar-inverse bg-inverse" role="navigation">
-        <div class="row">
-            <a class="col navbar-brand" href="#">SPORTS STORE</a>
-            <div class="col-4 text-right">
-                @await Component.InvokeAsync("CartSummary")
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/"><img src="~/images/white_logo.png" width="250" /></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav mr-auto pr-2">
+
+                    
+                    @await Component.InvokeAsync("NavigationMenu")
+                    
+
+                </ul>
+                <ul class="navbar-nav ml-auto pl-2">
+                    <li>@await Html.PartialAsync("LoginPartial")</li>
+                    <li>@await Component.InvokeAsync("CartSummary")</li>
+                </ul>
             </div>
         </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+        @if (this.ViewContext.RouteData.Values["controller"].ToString() == "Product")
+    {
+        @await Html.PartialAsync("MembershipPartial")
+}
+        
+        @RenderBody()
+
     </div>
-    <div class="row m-1 p-1">
-        <div id="categories" class="col-3">
-            @await Component.InvokeAsync("NavigationMenu")
+    <!-- /.container -->
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
         </div>
-        <div class="col-9">
-            @RenderBody()
-        </div>
-    </div>
+        <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
 </body>
+
 </html>

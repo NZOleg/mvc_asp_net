@@ -1,0 +1,26 @@
+﻿@model ProductsListViewModel
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+@if (!(ViewBag.Message == null))
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.Message
+    </div>
+}
+<h2 class="text-center">Check out Our Membership Deals:</h2>
+<div class="row pr-5 pl-5">
+
+    @foreach (var p in Model.Products)
+    {
+        @if (p.Category == "membership")
+        {
+            <div class="col-lg-4 col-md-6 mb-4 p-0 m-0">
+
+                @Html.Partial("MembershipSummary", p)
+
+            </div>
+
+        }
+
+    }
+</div>

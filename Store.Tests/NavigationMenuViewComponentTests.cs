@@ -14,6 +14,7 @@ namespace Store.Tests
 {
     public class NavigationMenuViewComponentTests
     {
+
         [Fact]
         public void Can_Select_Categories()
         {
